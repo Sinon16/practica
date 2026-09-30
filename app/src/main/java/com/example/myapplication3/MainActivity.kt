@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 fun textos(){
 
     Text("Hola mundo en android", fontSize = 20.sp)
-    Text("Mi nombre es Nico Robin ", fontSize = 26.sp)
+    Text("Mi nombre es Nico Robin a ", fontSize = 26.sp)
 }
 
 @Composable
