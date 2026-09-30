@@ -25,7 +25,7 @@ sealed class Pantalla(val ruta:String){
     object Luffy : Pantalla("pantalla_luffy")
 }
 
-// metodos de navegacion navcontrollera
+// metodos de navegacion navcontroller
 
     fun NavController.navegarALuffy(){
         this.navigate(Pantalla.Luffy.ruta)
