@@ -1,17 +1,11 @@
-package com.example.myapplication3
+package com.example.myapplication3.ui.theme
+
+import com.example.myapplication3.R
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -26,11 +20,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.animation.expandIn
-import androidx.compose.animation.shrinkOut
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.core.tween
 
 // rutas de navegacion
 sealed class Pantalla(val ruta:String){
@@ -40,12 +29,12 @@ sealed class Pantalla(val ruta:String){
 
 // metodos de navegacion NavController
 
-    fun NavController.navegarALuffy(){
-        this.navigate(Pantalla.Luffy.ruta)
-    }
-    fun NavController.volverAtras(){
-        this.popBackStack()
-    }
+fun NavController.navegarALuffy(){
+    this.navigate(Pantalla.Luffy.ruta)
+}
+fun NavController.volverAtras(){
+    this.popBackStack()
+}
 
 // Main
 class MainActivity : ComponentActivity() {
@@ -60,48 +49,27 @@ class MainActivity : ComponentActivity() {
 
 // Grafo  de navegacion
 @Composable
-fun AppNavegacion() {
+fun AppNavegacion(){
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = Pantalla.Robin.ruta
     ) {
-        composable(
-            route = Pantalla.Robin.ruta,
-            enterTransition = {
-                fadeIn(animationSpec = tween(500)) + scaleIn(initialScale = 0.8f)
-            },
-            exitTransition = {
-                fadeOut(animationSpec = tween(500)) + scaleOut(targetScale = 1.1f)
-            }
-        ) {
-            RobinScreen(
-                onIrALuffyClick = { navController.navigate(Pantalla.Luffy.ruta) }
+        composable(Pantalla.Robin.ruta){
+            RobinScreen (
+                onIrALuffyClick = {navController.navegarALuffy()}
             )
         }
-
-        composable(
-            route = Pantalla.Luffy.ruta,
-            enterTransition = {
-                expandIn(
-                    expandFrom = Alignment.Center,
-                    animationSpec = tween(400)
-                ) + fadeIn()
-            },
-            exitTransition = {
-                shrinkOut(
-                    shrinkTowards = Alignment.Center,
-                    animationSpec = tween(400)
-                ) + fadeOut()
-            }
-        ) {
-            LuffyScreen(
-                onVolverClick = { navController.popBackStack() }
+        composable(Pantalla.Luffy.ruta){
+            LuffyScreen (
+                onVolverClick = {navController.volverAtras()}
             )
         }
     }
+
 }
+
 // Pantalla Robin
 @Composable
 fun RobinScreen(onIrALuffyClick: ()-> Unit){
@@ -114,7 +82,7 @@ fun RobinScreen(onIrALuffyClick: ()-> Unit){
         Text("Mi nombre es Nico Robin", fontSize = 26.sp)
 
         Image(
-            painter = painterResource(id = R.drawable.nico_robin),
+            painter = painterResource(id = com.example.myapplication3.R.drawable.nico_robin),
             contentDescription = "Nico Robin",
             modifier = Modifier.height(300.dp)
         )
